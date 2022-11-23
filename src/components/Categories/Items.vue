@@ -1,13 +1,16 @@
 <script setup>
 import axios from "axios";
 import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import ItemCard from "../ItemCard.vue";
 
 const items = ref([]);
+const route = useRoute();
+
 async function getItemData() {
    try {
-      const response = await axios.get("https://zullkit-backend.buildwithangga.id/api/products");
-      items.value = response.data.data.data;
+      const response = await axios.get("https://zullkit-backend.buildwithangga.id/api/categories?id=" + route.params.id + "&show_product=1");
+      items.value = response.data.data.products;
    } catch (error) {
       console.log(error);
    }

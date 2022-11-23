@@ -1,5 +1,5 @@
 <template>
-   <div class="grid items-center grid-cols-1 md:grid-cols-2">
+   <div class="grid items-center grid-cols-1 md:grid-cols-2 max-w-7xl mx-auto">
       <div>
          <div class="z-10 px-5 pb-8 bg-white xl:pl-20 lg:pl-16 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
             <main class="mx-auto mt-10 max-w-7xl sm:mt-12 md:mt-16 lg:mt-20 xl:mt-36">
@@ -15,7 +15,7 @@
                   <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                      <div class="rounded-full">
                         <a
-                           href="#"
+                           href="#category"
                            class="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-lg md:px-10 hover:shadow"
                         >
                            Browse Now

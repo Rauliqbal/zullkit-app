@@ -16,7 +16,7 @@ function changeImage(image) {
 
 <template>
    <section id="gallery">
-      <img :src="'src/assets/img/' + defaultImage" alt="" class="w-full mt-6 rounded-2xl" />
+      <img :src="'/src/assets/img/' + defaultImage" alt="" class="w-full mt-6 rounded-2xl" />
       <div class="grid grid-cols-4 gap-4 mt-4">
          <template v-for="gallery in galleries" :key="gallery.id">
             <div @click="changeImage(gallery.image)" class="overflow-hidden cursor-pointer rounded-2xl" :class="{ 'ring-2 ring-indigo-500': defaultImage == gallery.image }">
