@@ -1,11 +1,31 @@
 <script setup>
+import axios from "axios";
 import { ref } from "vue";
 
-const registerForm = ref({
+const form = ref({
    name: "",
    email: "",
    password: "",
+   title: "Designer",
 });
+
+async function register() {
+   try {
+      const response = await axios.post("http://zullkit-backend.buildwithangga.id/api/register", {
+         name: form.value.name,
+         email: form.value.email,
+         password: form.value.password,
+         title: form.value.title,
+      });
+
+      console.log(response.data.data);
+
+      localStorage.setItem("access_token", response.data.data.access_token);
+      localStorage.setItem("access_type", response.data.data.token_type);
+   } catch (error) {
+      console.log(error);
+   }
+}
 </script>
 
 <template>
@@ -13,7 +33,7 @@ const registerForm = ref({
       <div class="mb-4">
          <label class="block mb-1" for="name">Name</label>
          <input
-            v-model="registerForm.name"
+            v-model="form.name"
             placeholder="Type your full name"
             id="name"
             type="text"
@@ -24,7 +44,7 @@ const registerForm = ref({
       <div class="mb-4">
          <label class="block mb-1" for="email">Email Address</label>
          <input
-            v-model="registerForm.email"
+            v-model="form.email"
             placeholder="Type your email"
             id="email"
             type="text"
@@ -35,7 +55,8 @@ const registerForm = ref({
       <div class="mb-4">
          <label class="block mb-1" for="password">Password</label>
          <input
-            v-model="registerForm.password"
+            @keyup.enter="register"
+            v-model="form.password"
             placeholder="Type your password"
             id="password"
             type="password"
@@ -45,6 +66,7 @@ const registerForm = ref({
       </div>
       <div class="mt-6">
          <button
+            @click="register"
             type="button"
             class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-lg md:px-10 hover:shadow"
          >
