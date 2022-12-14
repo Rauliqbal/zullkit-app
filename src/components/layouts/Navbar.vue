@@ -8,9 +8,8 @@ import NavigationLinks from "./NavigationLinks.vue";
 import UserInfo from "./UserInfo.vue";
 
 const userStore = useUserStore();
-const getUser = computed(() => userStore.getUser);
+const user = computed(() => userStore.getUser);
 const isLoggedIn = computed(() => userStore.isLoggedIn);
-const user = computed(() => userStore.user);
 
 onMounted(() => {
    userStore.fetchUser();
@@ -21,7 +20,7 @@ onMounted(() => {
    <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
       <div class="container flex flex-wrap items-center justify-between mx-auto my-2">
          <Logo />
-         <UserInfo v-if="isLoggedIn" />
+         <UserInfo v-if="isLoggedIn" :user="user.data" />
          <AuthButton v-else />
          <NavigationLinks />
       </div>

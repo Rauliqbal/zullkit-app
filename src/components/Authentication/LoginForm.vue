@@ -1,6 +1,11 @@
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
+import { useUserStore } from "@/stores/user";
+import { useRouter } from "vue-router";
+
+const userStore = useUserStore();
+const router = useRouter();
 
 const form = ref({
    email: "",
@@ -9,14 +14,16 @@ const form = ref({
 
 async function login() {
    try {
-      const response = await axios.post("http://zullkit-backend.buildwithangga.id/api/login", {
+      const response = await axios.post("https://zullkit-backend.buildwithangga.id/api/login", {
          email: form.value.email,
          password: form.value.password,
       });
-      console.log(response.data);
 
       localStorage.setItem("access_token", response.data.data.access_token);
       localStorage.setItem("access_type", response.data.data.token_type);
+
+      userStore.fetchUser();
+      router.push("/");
    } catch (error) {
       console.log(error);
    }
