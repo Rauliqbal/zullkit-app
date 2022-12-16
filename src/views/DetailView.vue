@@ -1,11 +1,15 @@
 <script setup>
-import { computed } from "@vue/reactivity";
-import axios from "axios";
-import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
 import Gallery from "../components/Detail/Gallery.vue";
+import { useUserStore } from "@/stores/user";
+import { computed, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import axios from "axios";
 
 const route = useRoute();
+const userStore = useUserStore();
+
+const user = computed(() => userStore.getUser);
+const isLoggedIn = computed(() => userStore.isLoggedIn);
 const item = ref(false);
 
 async function getProducts() {
@@ -23,6 +27,7 @@ const features = computed(() => {
 
 onMounted(() => {
    window.scrollTo(0, 0);
+   userStore.fetchUser();
    getProducts();
 });
 </script>
@@ -74,12 +79,20 @@ onMounted(() => {
                            </li>
                         </ul>
                      </div>
-                     <router-link
-                        to="/pricing"
-                        class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow"
-                     >
-                        Download Now
-                     </router-link>
+                     <a
+                        v-if="user.data.subscription.length > 0"
+                           :href="item.file"
+                           class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow"
+                        >
+                           Download Now
+                        </a>
+                        <router-link
+                        v-else
+                           to="/pricing"
+                           class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow"
+                        >
+                           Subscribe
+                        </router-link>
                   </div>
                </div>
             </aside>

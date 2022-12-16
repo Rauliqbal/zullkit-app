@@ -2,6 +2,27 @@
 import IconBadge from "../components/Icons/IconBadge.vue";
 import IconBook from "../components/Icons/IconBook.vue";
 import IconLayer from "../components/Icons/IconLayer.vue";
+
+import axios from "axios";
+
+async function checkout(price) {
+   try {
+      const response = await axios.post(
+         "https://zullkit-backend.buildwithangga.id/api/checkout",
+         {
+            payment_total: price,
+            payment_status: "PENDING",
+         },
+         {
+            headers: {
+               Authorization: localStorage.getItem("access_type") + " " + localStorage.getItem("access_token"),
+            },
+         }
+      );
+
+      window.location.href = response.data.data.payment_url;
+   } catch (error) {}
+}
 </script>
 
 <template>
@@ -44,12 +65,12 @@ import IconLayer from "../components/Icons/IconLayer.vue";
                               Pre-built design screen
                            </li>
                         </ul>
-                        <router-link
-                           to="/success"
+                        <button
+                           @click="checkout(2000)"
                            class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-black bg-gray-200 border border-transparent rounded-full hover:bg-gray-300 md:py-2 md:text-md md:px-10 hover:shadow"
                         >
                            Checkout Now
-                        </router-link>
+                        </button>
                      </div>
                   </div>
                   <div>
@@ -95,12 +116,12 @@ import IconLayer from "../components/Icons/IconLayer.vue";
                               Unlock cloning app
                            </li>
                         </ul>
-                        <router-link
-                           to="/success"
+                        <button
+                           @click="checkout(9000)"
                            class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow"
                         >
                            Checkout Now
-                        </router-link>
+                        </button>
                      </div>
                   </div>
                </div>
